@@ -7,20 +7,13 @@ public class BinaryTree{
 	
 	public static Node root ;
 	
-	BinaryTree(){
-		
-	}
-	
-	
+	//constructor to put array's numebr into insert method
 	BinaryTree(int[] numbers){
 		for (int i = 0; i < numbers.length; i++){
 			insert(numbers[i]);
 		}
 	}
 	
-	public void inorder(){
-		storeNumber(root);		
-	}
 	
 	public boolean insert(int e){
 		if (root == null){
@@ -31,46 +24,65 @@ public class BinaryTree{
 			Node parent = null;
 			Node current = root;
 			while (current != null){
-				if (e<current.element) {
+				
+				//judge the value , and print it to the left
+				if (e < current.element) {
 					parent = current;
 					current = current.left;
 				}
-				
+				//judge the value , and print it to the right
 				else if (e > current.element) {
 					parent = current;
 					current = current.right;
 				}
+				
 				else
 					return false; 
 			}
-      
-			if (e<parent.element)
+			
+			//new a Node to store parent node
+			if (e < parent.element){
 				parent.left = createNewNode(e);
-			else
+			}
+			else{
 				parent.right = createNewNode(e);
+			}
 		}
 
 		return true; 		
 	}
+	
+	//create new Node
 	Node createNewNode(int e) {
 		return new Node(e);
 	}
 	
-	public void storeNumber(Node root){
+	//invoke the inOrder method
+	public void inorder(){
+		inOrder(root);		
+	}
+	
+	//print the binary tree 's result 
+	public void inOrder(Node root){
 		if(root == null){
 			return;
 		}
-		storeNumber(root.left);
-		System.out.print(root.element + " , ");
-		storeNumber(root.right);
+		
+		inOrder(root.left);
+		System.out.print(root.element + "  ");
+		inOrder(root.right);
 		
 	}
 	
+	//define a Node class 
 	public static class Node{
+		
+		//data field 
 		Node left;
 		Node right;
 		int element;
 		
+		//constructor
 		public Node(int e){
 			
 			element = e;
@@ -79,31 +91,6 @@ public class BinaryTree{
 			
 		}
 		
-		public ArrayList path(int e){
-		
-			Node current = root;
-			
-			ArrayList list = new ArrayList();
-		
-			while(current != null){
-			
-				list.add(current);
-			
-				if(e >current.element){
-					current = current.right;
-				}
-				else if (e  < current.element){
-					current = current.left;
-				}
-			
-				else{
-					break;
-				}
-			}
-			
-			return list;
-			
-		}
 	}
 
 	
